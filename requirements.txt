@@ -1,5 +1,8 @@
-bottle==0.12.20
-Markdown==2.6.11
-Pygments==2.15.0
+bottle==0.12.19
+linecache2==1.0.0
+Markdown==2.6.2
 py-gfm==0.1.0
-
+Pygments==2.7.4
+six==1.9.0
+traceback2==1.4.0
+unittest2==1.0.1

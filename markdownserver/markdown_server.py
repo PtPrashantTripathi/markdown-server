@@ -1,7 +1,7 @@
 import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
-from .markdown_converter import MarkdownConverter
-from .env import ms_host, ms_port, ms_debug
+from markdownserver.markdown_converter import MarkdownConverter
+from markdownserver.env import ms_host, ms_port, ms_debug
 
 
 class MarkdownServerHandler(SimpleHTTPRequestHandler):
@@ -71,7 +71,7 @@ class MarkdownServer:
         """
         # Use environment variables or defaults for host and port
         self.host = host or ms_host
-        self.port = port or ms_port
+        self.port = int(port or ms_port)
         self.debug = debug or ms_debug
         self.server_address = (self.host, self.port)
         self.httpd = HTTPServer(self.server_address, MarkdownServerHandler)

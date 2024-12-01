@@ -3,7 +3,7 @@ import os
 import markdown as md
 import codecs
 import argparse
-from .env import css_path, ms_encoding, markdown_type, html_dir, html_extension
+from markdownserver.env import css_path, ms_encoding, markdown_type, html_dir, html_extension
 
 
 class MarkdownConverter:
