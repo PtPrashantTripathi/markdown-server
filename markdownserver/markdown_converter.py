@@ -1,16 +1,14 @@
-from __future__ import print_function
-from __future__ import absolute_import
-from builtins import object
-import markdown as md
-import codecs
 import sys
 import os
-from .env import css_path, ms_encoding, markdown_type, \
-    html_dir, html_extension
+import markdown as md
+import codecs
+import argparse
+from .env import css_path, ms_encoding, markdown_type, html_dir, html_extension
 
 
-class MarkdownConverter(object):
+class MarkdownConverter:
     def __init__(self):
+        """Initialize the converter with the CSS header and footer."""
         css = codecs.open(css_path, encoding=ms_encoding, mode="r")
         self.html_header = (
             """
@@ -35,21 +33,21 @@ class MarkdownConverter(object):
             """
 
     def convert(self, src, dst=""):
+        """Convert a Markdown file to HTML."""
         code = md.markdown(self.read_md(src), extensions=[markdown_type])
         return self.write_html(code, src, dst)
 
     def read_md(self, file_name):
+        """Read the contents of a Markdown file."""
         workingdir = os.getcwd()
         md_file = codecs.open(
-            os.path.join(workingdir, file_name),
-            encoding=ms_encoding,
-            mode="r"
+            os.path.join(workingdir, file_name), encoding=ms_encoding, mode="r"
         )
         return md_file.read()
 
     def write_html(self, body, file_name, dst):
+        """Write HTML content to a file."""
         html_path = os.path.join(html_dir, file_name + html_extension)
-
         if dst != "":
             html_path = dst
         try:
@@ -63,12 +61,29 @@ class MarkdownConverter(object):
 
 
 def main():
-    args = sys.argv
-    if len(args) != 3:
-        print("usage: convert source_md_file target_html_file")
-    else:
-        converter = MarkdownConverter()
-        converter.convert(args[1], args[2])
+    """CLI entry point to convert a Markdown file to HTML using argparse."""
+    parser = argparse.ArgumentParser(
+        description="Convert a Markdown file to an HTML file with styling."
+    )
+    parser.add_argument(
+        "source_md_file",
+        metavar="SOURCE_MD_FILE",
+        help="The source Markdown file to convert",
+    )
+    parser.add_argument(
+        "target_html_file",
+        metavar="TARGET_HTML_FILE",
+        help="The destination HTML file to save",
+    )
+
+    args = parser.parse_args()
+
+    # Convert the given Markdown file to HTML
+    converter = MarkdownConverter()
+    html_path = converter.convert(args.source_md_file, args.target_html_file)
+    print(
+        f"Markdown file '{args.source_md_file}' converted to HTML and saved as '{html_path}'"
+    )
 
 
 if __name__ == "__main__":

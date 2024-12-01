@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markdown-server"
+version = "0.2.1"
+description = "Simple markdown server written in Python. It converts your markdown file to HTML and returns a response as text/html."
+readme = "README.rst"
+authors = [
+    { name = "Masato Ohba", email = "over.rye@gmail.com" },
+    { name = "Pt. Prashant Tripathi", email = "ptprashanttripathi@outlook.com" }
+]
+license = { text = "MIT License" }
+keywords = ["web", "markdown","md","server","markdownserver","markdownconvert"]
+classifiers = [
+    "Topic :: Utilities",
+    "Development Status :: 4 - Beta",
+    "Framework :: Bottle",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/ohbarye/markdown-server"
+
+[project.dependencies]
+bottle = "*"
+Markdown = "==2.6.11"
+Pygments = "*"
+py-gfm = "*"
+
+
+[project.scripts]
+markdownserver = "markdownserver:main"
+markdownconvert = "markdownserver.markdown_converter:main"
+
+[tool.setuptools.package-data]
+"markdownserver" = ["*"]
